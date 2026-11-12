@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://docs.google.com https://*.googleusercontent.com; object-src 'none'; base-uri 'self'">
+  <meta name="theme-color" content="#5a48b8">
+  <meta name="description" content="Банановый апсейл - конкурс МПП по допродажам модификаторов">
+  <title>Банановый апсейл</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="./src/styles/tokens.css">
+  <link rel="stylesheet" href="./src/styles/base.css">
+  <link rel="stylesheet" href="./src/styles/scene.css">
+  <link rel="stylesheet" href="./src/styles/mixer.css">
+  <link rel="stylesheet" href="./src/styles/detail.css">
+</head>
+<body>
+  <div class="app" data-app>
+    <header class="top" data-top>
+      <div class="brand">
+        <h1 class="brand__name">Банановый<br>апсейл</h1>
+        <p class="brand__note" data-note>2 приза по 8 000 ₽, финал 21 декабря</p>
+      </div>
+
+      <div class="noms">
+        <button class="nom" type="button" data-nom="share" aria-pressed="false">
+          <span class="nom__icon" data-icon="crown"></span>
+          <span class="nom__label">Доля допродаж</span>
+          <span class="nom__line"><span class="nom__leader" data-leader="share">Загрузка</span><span class="nom__value" data-leader-value="share"></span></span>
+        </button>
+        <button class="nom" type="button" data-nom="check" aria-pressed="false">
+          <span class="nom__icon" data-icon="gold"></span>
+          <span class="nom__label">Средний чек</span>
+          <span class="nom__line"><span class="nom__leader" data-leader="check">Загрузка</span><span class="nom__value" data-leader-value="check"></span></span>
+        </button>
+      </div>
+
+      <aside class="mixer" data-mixer aria-label="Звук игры"></aside>
+    </header>
+
+    <main class="stage" data-stage aria-label="Игровое поле: семь участников"></main>
+    <p class="status" data-status role="status" hidden></p>
+  </div>
+
+  <section class="detail" data-detail aria-hidden="true" aria-label="Статистика участника">
+    <div class="detail__sheet" data-sheet></div>
+    <div class="detail__hero" data-hero>
+      <span class="detail__ring" aria-hidden="true"></span>
+      <span class="detail__pad" aria-hidden="true"></span>
+      <span class="detail__sheen" data-sheen aria-hidden="true"></span>
+    </div>
+    <div class="detail__minion" data-d="minion"></div>
+    <button class="detail__back" type="button" data-back aria-label="Назад на игровое поле"></button>
+
+    <div class="detail__scroll" data-scroll>
+      <h2 class="detail__name"><span data-d="last"></span><span data-d="first"></span></h2>
+      <p class="detail__team" data-in data-team></p>
+
+      <div class="stats">
+        <section class="stat" data-stat="share">
+          <p class="stat__label" data-in><span>Доля допродаж</span><span class="stat__place" data-place="share"></span></p>
+          <p class="stat__value"><span data-d="share"></span></p>
+          <p class="stat__counter"><span data-d="renewals"></span></p>
+          <div class="slots" data-in data-slots></div>
+          <p class="stat__issue" data-in data-issue hidden></p>
+          <ol class="rows" data-rows="days"></ol>
+        </section>
+
+        <section class="stat" data-stat="check">
+          <p class="stat__label" data-in><span>Средний чек модификатора</span><span class="stat__place" data-place="check"></span></p>
+          <p class="stat__value"><span data-d="check"></span></p>
+          <p class="stat__counter"><span data-d="mods"></span></p>
+          <ol class="rows" data-rows="mods"></ol>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <script src="./vendor/gsap.min.js"></script>
+  <script src="./vendor/CustomEase.min.js"></script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

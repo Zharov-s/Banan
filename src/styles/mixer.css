@@ -1,0 +1,80 @@
+/* ---------- звук: переключатель и микшер каналов ---------- */
+.mixer { display: flex; align-items: flex-end; gap: 18px; flex: none; }
+
+.mixer__strips { display: flex; gap: 12px; opacity: 0.55; transition: opacity var(--normal) var(--ease-out); }
+.mixer.is-on .mixer__strips { opacity: 1; }
+
+.strip {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  width: 44px;
+  cursor: ns-resize;
+  touch-action: none;
+  border-radius: 6px;
+}
+.strip__meter { display: flex; flex-direction: column-reverse; gap: 2px; width: 22px; }
+.strip__meter i {
+  height: 3px;
+  border-radius: 1px;
+  background: var(--text);
+  opacity: 0.3;
+  transition: opacity 90ms linear, background-color 90ms linear;
+}
+.strip__meter i.off { opacity: 0.1; }
+.strip__meter i.on { background: var(--accent); opacity: 1; }
+.strip__meter i.peak { background: var(--text); opacity: 0.9; }
+.strip__name { font-size: 12px; font-weight: 500; color: var(--text-soft); line-height: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .strip:hover .strip__name { color: var(--text); }
+}
+
+.sound { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-weight: 600; font-size: 15px; }
+.sound__words { position: relative; display: block; overflow: hidden; line-height: 1.2; }
+.sound__text { display: block; }
+.sound__text--b { position: absolute; inset: 0; }
+.sound__text .c {
+  display: inline-block;
+  transition: transform 420ms var(--ease-out);
+  transition-delay: calc(var(--i) * 28ms);
+}
+.sound__text--b .c { transform: translateY(110%); }
+@media (hover: hover) and (pointer: fine) {
+  .sound:hover .sound__text--a .c { transform: translateY(-110%); }
+  .sound:hover .sound__text--b .c { transform: translateY(0); }
+}
+
+.sound__track {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--deck);
+  overflow: hidden;
+}
+.sound__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--banana);
+  opacity: 0;
+  transition: opacity var(--normal) var(--ease-out);
+}
+.sound[aria-pressed='true'] .sound__fill { opacity: 1; }
+.sound__knob { position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; }
+.sound__ball {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--text);
+  transition: background-color var(--normal) var(--ease-out);
+}
+.sound[aria-pressed='true'] .sound__ball { background: var(--ink); }
+
+@media (max-width: 1180px) {
+  .mixer__strips { display: none; }
+  .mixer.is-on .mixer__strips { display: flex; }
+  .mixer { gap: 14px; }
+  .strip { width: 38px; }
+}

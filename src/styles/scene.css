@@ -1,0 +1,240 @@
+/* ---------- сцена: цех с семью подъёмниками ---------- */
+.stage {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* круглое окно в ночь с банановым месяцем - глубина сцены без лишних слоёв */
+.stage__window {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  width: min(52vh, 40vw, 460px);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: var(--sky);
+  box-shadow: 0 0 0 10px var(--wall-deep);
+  overflow: hidden;
+  pointer-events: none;
+}
+.stage__window svg { width: 100%; height: 100%; }
+.star { animation: twinkle 3.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.star:nth-child(2n) { animation-delay: -1.3s; }
+.star:nth-child(3n) { animation-delay: -2.4s; }
+@keyframes twinkle { 50% { opacity: 0.25; transform: scale(0.7); } }
+
+.row {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  flex: var(--n) 1 0;
+  min-width: 0;
+}
+.row--first { padding-left: var(--gutter); }
+.row--last { padding-right: var(--gutter); }
+.row::after {
+  content: '';
+  position: absolute;
+  inset: auto -1px 0 0;
+  height: var(--floor-h);
+  background: var(--floor);
+  box-shadow: inset 0 5px 0 var(--floor-lip);
+}
+
+/* шкала доли на стене: 0, 25, 50, 75, 100% */
+.scale { position: absolute; inset: 0 0 var(--floor-h) 0; pointer-events: none; }
+.scale__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--deck-h) + var(--p) * var(--travel));
+  height: 0;
+  border-top: 2px dashed var(--wall-line);
+}
+.scale__line span {
+  position: absolute;
+  left: calc(var(--gutter) - 4px);
+  bottom: 4px;
+  translate: -100% 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+.row:not(.row--first) .scale__line span { display: none; }
+
+.bay {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) var(--floor-h);
+  min-width: 0;
+  text-align: center;
+  outline-offset: -6px;
+}
+.bay__wall { position: relative; display: block; }
+.bay__shaft { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.bay__rod {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 16px;
+  margin-left: -8px;
+  height: calc(var(--travel) + 20px);
+  background: linear-gradient(90deg, var(--steel) 0 56%, var(--steel-shade) 56%);
+}
+
+/* луч над лидером по доле */
+.bay__beam {
+  position: absolute;
+  inset: 0;
+  background: var(--share);
+  clip-path: polygon(44% 0, 56% 0, 96% 100%, 4% 100%);
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+  pointer-events: none;
+}
+.bay.is-share-lead .bay__beam { opacity: 0.1; }
+
+.lift {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: grid;
+  justify-items: center;
+  will-change: transform;
+}
+.lift__rider { position: relative; display: block; width: var(--mw); transform-origin: 50% 100%; }
+.minion { width: 100%; height: auto; overflow: visible; }
+
+.lift__deck {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(96%, calc(var(--mw) * 1.34));
+  height: var(--deck-h);
+  padding-top: 5px;
+  border-radius: 7px;
+  background: var(--deck);
+  box-shadow: inset 0 5px 0 var(--deck-lip);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(12px, calc(var(--mw) * 0.125), 15px);
+  line-height: 1;
+  overflow: hidden;
+  transition: box-shadow var(--normal) var(--ease-out);
+}
+.bay.is-share-lead .lift__deck { box-shadow: inset 0 5px 0 var(--share); color: var(--share); }
+.lift__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.5) 50%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ценник среднего чека над бананом */
+.lift__price {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  translate: -50% 0;
+  padding: 5px 9px 4px;
+  border-radius: 7px;
+  background: var(--deck);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(11px, calc(var(--mw) * 0.115), 14px);
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+}
+.bay.is-check-lead .lift__price { color: var(--check); }
+
+/* бананы на платформе: каждая допродажа - банан, пять - связка */
+.lift__pile { position: absolute; inset: auto 0 var(--deck-h) 0; height: 0; pointer-events: none; }
+.nana {
+  position: absolute;
+  bottom: calc(var(--row) * var(--mw) * 0.105 - 1px);
+  left: calc(50% + var(--side) * var(--mw) * (0.36 + var(--col) * 0.17) - var(--mw) * 0.1);
+  width: calc(var(--mw) * 0.2);
+}
+.nana svg { width: 100%; height: auto; }
+
+.bay__floor {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  padding: 8px 4px 0;
+}
+.bay__base {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 44px;
+  height: 7px;
+  margin-left: -22px;
+  border-radius: 0 0 5px 5px;
+  background: var(--deck-lip);
+}
+.bay__rank {
+  min-height: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  translate: 0 4px;
+  transition: opacity var(--normal) var(--ease-out), translate var(--normal) var(--ease-out);
+}
+.bay__rank[data-rank='share'] { color: var(--share); }
+.bay__rank[data-rank='check'] { color: var(--check); display: none; }
+.stage[data-focus='check'] .bay__rank[data-rank='share'] { display: none; }
+.stage[data-focus='check'] .bay__rank[data-rank='check'] { display: block; }
+.stage[data-focus] .bay__rank { opacity: 1; translate: 0 0; }
+.bay__last { font-weight: 700; font-size: clamp(13px, 1.15vw, 16px); line-height: 1.2; }
+.bay__first { font-size: clamp(13px, 1.05vw, 15px); color: var(--text-soft); line-height: 1.2; }
+
+/* фокус на одной номинации приглушает знаки другой */
+.m-nana, .lift__price, .lift__deck, .lift__pile { transition: opacity var(--normal) var(--ease-out); }
+.stage[data-focus='share'] .m-nana { opacity: 0.25; }
+.stage[data-focus='share'] .lift__price { opacity: 0 !important; }
+.stage[data-focus='check'] .lift__deck, .stage[data-focus='check'] .lift__pile { opacity: 0.3; }
+
+/* ---------- жизнь миньона ---------- */
+.m-up { transform-box: view-box; transform-origin: 60px 128px; animation: breathe 3.4s ease-in-out infinite; animation-delay: var(--beat, 0s); }
+@keyframes breathe { 50% { transform: scale(1.012, 0.982); } }
+.is-asleep .m-up { animation-duration: 5.2s; }
+
+.m-mouth { display: none; }
+.minion[data-mood='smile'] .m-mouth--smile,
+.minion[data-mood='open'] .m-mouth--open,
+.minion[data-mood='flat'] .m-mouth--flat { display: inline; }
+
+.m-crown-s, .m-nana-s { opacity: 0; }
+.m-rosette, .m-sparks { opacity: 0; transition: opacity 400ms var(--ease-out); }
+.minion.is-gold .m-rosette, .minion.is-gold .m-sparks { opacity: 1; }
+.m-spark { transform-box: fill-box; transform-origin: center; animation: twinkle 2.2s ease-in-out infinite; }
+.m-spark:nth-child(2) { animation-delay: -0.7s; }
+.m-spark:nth-child(3) { animation-delay: -1.4s; }
+
+@media (max-width: 900px) {
+  :root { --floor-h: 84px; --deck-h: 26px; }
+  .stage { flex-direction: column; }
+  .stage__window { top: 2%; width: min(64vw, 300px); }
+  .row { flex: none; height: clamp(370px, 54dvh, 470px); padding-inline: 12px 12px; justify-content: center; }
+  .row--first, .row--last { padding-inline: 12px; }
+  .row--last { grid-auto-columns: minmax(0, calc((100% - 0px) / 4)); }
+  .scale__line span { left: 4px; translate: 0 0; font-size: 12px; }
+  .row:not(.row--first) .scale__line span { display: block; }
+  .bay__last, .bay__first { font-size: 13px; }
+  .bay__floor { padding-inline: 1px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m-up, .m-spark, .star { animation: none; }
+}

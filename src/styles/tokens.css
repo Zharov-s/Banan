@@ -1,0 +1,40 @@
+:root {
+  /* цех: фиолетовая стена, тёмный пол, сталь подъёмников */
+  --wall: #5a48b8;
+  --wall-deep: #4c3ca6;
+  --wall-line: rgb(255 255 255 / 0.17);
+  --sky: #3a2c8e;
+  --floor: #2c2269;
+  --floor-lip: #3d3190;
+  --deck: #2a2260;
+  --deck-lip: #8176dc;
+  --steel: #cfcaf0;
+  --steel-shade: #958dd2;
+
+  --ink: #2a2147;
+  --ink-soft: #6a628c;
+  --paper: #f6f3ff;
+  --paper-line: #dcd5f5;
+  --text: #ffffff;
+  --text-soft: #d9d3f8;
+
+  /* акценты строго по назначению */
+  --banana: #ffd64a;
+  --share: #5ef0c8;   /* номинация «доля допродаж» */
+  --check: #ffb629;   /* номинация «средний чек» */
+  --warn: #ff7a66;
+
+  --font-display: 'Unbounded', 'Onest', system-ui, sans-serif;
+  --font-text: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --gutter: clamp(16px, 4vw, 60px);
+  --floor-h: 104px;
+  --deck-h: 30px;
+  --mw: 120px;
+  --travel: 240px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --fast: 140ms;
+  --normal: 240ms;
+}
