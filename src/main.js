@@ -46,7 +46,7 @@ function daysToFinal(now = new Date()) {
 function renderNote() {
   const days = daysToFinal();
   const when = days > 0 ? `до финала ${days}\u00A0${plural(days, 'день', 'дня', 'дней')}` : days === 0 ? 'финал сегодня' : 'финал 21 декабря';
-  $('[data-note]').textContent = `2 приза по 8\u00A0000\u00A0₽, ${when}`;
+  $('[data-note]').textContent = `2 приза, ${when}`;
 }
 
 function renderLeaders(standings) {
